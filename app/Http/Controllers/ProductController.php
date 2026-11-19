@@ -41,7 +41,14 @@ class ProductController extends Controller
     'price' => ['required','numeric','min:0'],
     'stock' => ['required','integer','min:0'],
     'description' => ['nullable','string','max:2000'],
+    'image' => ['nullable', 'image', 'mimes:jpg, jpeg, png, webp', 'max:5048'],
     ]);
+
+    if($request->hasFile('image')){
+        $validated['image'] = $request->file('image')
+        ->store('products', 'public');
+    }
+
     Product::create($validated);
     return redirect()->route('products.index')->with('success','Produk berhasil ditambahkan.');
     }
@@ -60,7 +67,15 @@ class ProductController extends Controller
     'price' => ['required','numeric','min:0'],
     'stock' => ['required','integer','min:0'],
     'description' => ['nullable','string','max:2000'],
+    'image' => ['nullable', 'image', 'mimes:jpg, jpeg, png, webp', 'max:5048'],
     ]);
+
+    if($request->hasFile('image')){
+        $validated['image'] = $request->file('image')
+        ->store('products', 'public');
+    }
+
+
     $product->update($validated);
     return redirect()->route('products.index')->with('success','Produk berhasil diperbarui.');
     }
